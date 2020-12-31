@@ -1,0 +1,23 @@
+{
+  "groups": [
+    {
+      "name": "jwt.token",
+      "type": "fudan.database.pj.security.jwt.JwtConfigProperties",
+      "sourceType": "fudan.database.pj.security.jwt.JwtConfigProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jwt.token.secret",
+      "type": "java.lang.String",
+      "sourceType": "fudan.database.pj.security.jwt.JwtConfigProperties"
+    },
+    {
+      "name": "jwt.token.validity",
+      "type": "java.lang.Integer",
+      "sourceType": "fudan.database.pj.security.jwt.JwtConfigProperties",
+      "defaultValue": 0
+    }
+  ],
+  "hints": []
+}
