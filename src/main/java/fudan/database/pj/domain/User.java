@@ -21,6 +21,7 @@ public class User implements UserDetails {
     private String username;
 
     private String password;
+    private String information;
 
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Authority> authorities = new HashSet<>();
@@ -28,9 +29,10 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, String information) {
         this.username = username;
         this.password = password;
+        this.information = information;
     }
 
     public Long getId() {
@@ -57,6 +59,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
     }
 
     @Override
