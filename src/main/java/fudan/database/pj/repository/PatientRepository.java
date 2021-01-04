@@ -14,4 +14,6 @@ public interface PatientRepository extends CrudRepository<Patient, Long> {
     Set<Patient> findAllByArea(int area);
 
     Set<Patient> findAllByCondition(int condition);
+
+    Set<Patient> findAllByAreaAndCondition(int area, int condition);
 }

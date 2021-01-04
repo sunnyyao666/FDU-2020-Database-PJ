@@ -5,6 +5,7 @@ package fudan.database.pj.controller.request;
  */
 public class FilterRequest {
     private int filter;
+    private String username;
     public FilterRequest(){}
 
     public int getFilter() {
@@ -13,5 +14,13 @@ public class FilterRequest {
 
     public void setFilter(int filter) {
         this.filter = filter;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

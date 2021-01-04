@@ -49,6 +49,11 @@ public class PJApplication {
             authorityRepository.save(matAuthority);
         }
 
+        User emergencyNurse = new User("EmergencyNurse", passwordEncoder.encode(password), "EmergencyNurse");
+        userRepository.save(emergencyNurse);
+        Authority emeAuthority = new Authority("emergencyNurse", emergencyNurse, 0);
+        authorityRepository.save(emeAuthority);
+
         for (int i = 1; i <= 2; i++)
             for (int j = 1; j <= 3; j++) {
                 Ward ward = new Ward(j, i);

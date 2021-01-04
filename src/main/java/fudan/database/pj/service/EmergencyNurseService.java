@@ -14,20 +14,14 @@ import java.util.Set;
 @Service
 public class EmergencyNurseService {
     private final UserRepository userRepository;
-    private final AuthorityRepository authorityRepository;
-    private final WardRepository wardRepository;
-    private final SickbedRepository sickbedRepository;
     private final PatientRepository patientRepository;
-    private final StateRepository stateRepository;
+    private final PatientService patientService;
 
     @Autowired
-    public EmergencyNurseService(UserRepository userRepository, AuthorityRepository authorityRepository, WardRepository wardRepository, SickbedRepository sickbedRepository, PatientRepository patientRepository, StateRepository stateRepository) {
+    public EmergencyNurseService(UserRepository userRepository, PatientRepository patientRepository, PatientService patientService) {
         this.userRepository = userRepository;
-        this.authorityRepository = authorityRepository;
-        this.wardRepository = wardRepository;
-        this.sickbedRepository = sickbedRepository;
         this.patientRepository = patientRepository;
-        this.stateRepository = stateRepository;
+        this.patientService = patientService;
     }
 
     public Patient addPatient(String name, String information, int condition) throws BadCredentialsException {
@@ -39,7 +33,7 @@ public class EmergencyNurseService {
 
         Patient patient = new Patient(name, information, condition);
         patientRepository.save(patient);
-        patient = transferArea(patient);
+        patient = patientService.transferArea(patient);
         return patient;
     }
 
@@ -57,38 +51,5 @@ public class EmergencyNurseService {
 
         if (result == null || result.size() == 0) return null;
         else return result;
-    }
-
-    public Patient transferArea(Patient patient) {
-        int from = patient.getArea();
-        int to = patient.getCondition();
-        if (from == to) return patient;
-
-        Set<Ward> wards = wardRepository.findAllByArea(to);
-        Sickbed sickbed = null;
-        for (Ward ward : wards) {
-            Set<Sickbed> sickbeds = ward.getSickbeds();
-            for (Sickbed s : sickbeds) if (s.getPatient() == null) sickbed = s;
-        }
-        if (sickbed == null) return patient;
-
-        Set<Authority> wardNurses = authorityRepository.findAllByAuthorityAndArea("wardNurse", to);
-        Authority wardNurse = null;
-        int m = 4 - to;
-        for (Authority a : wardNurses)
-            if (a.getSickbeds().size() < m) wardNurse = a;
-        if (wardNurse == null) return patient;
-
-        patient.setArea(to);
-        patientRepository.save(patient);
-
-        sickbed.setWardNurse(wardNurse);
-        sickbed.setPatient(patient);
-        sickbedRepository.save(sickbed);
-
-        if (patientRepository.findById(patient.getId()).isPresent())
-            patient = patientRepository.findById(patient.getId()).get();
-        else throw new BadCredentialsException("No such Patient!");
-        return patient;
     }
 }

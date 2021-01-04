@@ -30,4 +30,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         response.put("message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(ResponsibleToPatientsException.class)
+    ResponseEntity<?> handleResponsibleToPatientsException(ResponsibleToPatientsException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }
