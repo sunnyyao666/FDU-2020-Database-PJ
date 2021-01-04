@@ -1,5 +1,7 @@
 package fudan.database.pj.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +31,8 @@ public class Patient {
     private int area;
     private int condition;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "patient")
+    @OneToOne
+    @JsonIgnore
     private Sickbed sickbed;
 
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "patient")
@@ -44,6 +47,7 @@ public class Patient {
     public Patient(String name, String information, int condition) {
         this.name = name;
         this.information = information;
+        this.area = 5;
         this.condition = condition;
     }
 

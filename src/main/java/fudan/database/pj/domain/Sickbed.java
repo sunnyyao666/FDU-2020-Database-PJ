@@ -19,14 +19,15 @@ public class Sickbed {
     @JsonIgnore
     private Ward ward;
 
+    private int number;
+
     @ManyToOne
     @JsonIgnore
     private Authority wardNurse;
 
     private String wardNurseName;
 
-    @OneToOne
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "sickbed")
     private Patient patient;
 
     private Long patientID;
@@ -35,8 +36,9 @@ public class Sickbed {
     public Sickbed() {
     }
 
-    public Sickbed(Ward ward, Authority wardNurse, Patient patient) {
+    public Sickbed(Ward ward, int number, Authority wardNurse, Patient patient) {
         this.ward = ward;
+        this.number = number;
         this.wardNurse = wardNurse;
         if (wardNurse != null) this.wardNurseName = wardNurse.getUser().getUsername();
         else this.wardNurseName = null;
@@ -63,6 +65,14 @@ public class Sickbed {
 
     public void setWard(Ward ward) {
         this.ward = ward;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Authority getWardNurse() {

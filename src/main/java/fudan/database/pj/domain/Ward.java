@@ -22,14 +22,17 @@ public class Ward {
      */
     private int area;
 
+    private int number;
+
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "ward")
     private Set<Sickbed> sickbeds = new HashSet<>();
 
     public Ward() {
     }
 
-    public Ward(int area) {
+    public Ward(int area, int number) {
         this.area = area;
+        this.number = number;
     }
 
     public Long getId() {
@@ -46,6 +49,14 @@ public class Ward {
 
     public void setArea(int area) {
         this.area = area;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Set<Sickbed> getSickbeds() {

@@ -49,16 +49,16 @@ public class PJApplication {
             authorityRepository.save(matAuthority);
         }
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 1; i <= 2; i++)
             for (int j = 1; j <= 3; j++) {
-                Ward ward = new Ward(j);
+                Ward ward = new Ward(j, i);
                 wardRepository.save(ward);
                 int m = 0;
                 if (j == 1) m = 4;
                 else if (j == 2) m = 2;
                 else m = 1;
                 for (int k = 1; k <= m; k++) {
-                    Sickbed sickbed = new Sickbed(ward, null, null);
+                    Sickbed sickbed = new Sickbed(ward, k, null, null);
                     sickbedRepository.save(sickbed);
                 }
             }

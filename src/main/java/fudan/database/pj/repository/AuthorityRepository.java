@@ -8,5 +8,5 @@ import java.util.Set;
 
 @Repository
 public interface AuthorityRepository extends CrudRepository<Authority, Long> {
-    Set<Authority> findAllByAuthority(String authority);
+    Set<Authority> findAllByAuthorityAndArea(String authority,int area);
 }
