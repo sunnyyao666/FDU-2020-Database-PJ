@@ -19,12 +19,14 @@ public class WardNurseService {
     private final UserRepository userRepository;
     private final PatientRepository patientRepository;
     private final StateRepository stateRepository;
+    private final PatientService patientService;
 
     @Autowired
-    public WardNurseService(UserRepository userRepository, PatientRepository patientRepository, StateRepository stateRepository) {
+    public WardNurseService(UserRepository userRepository, PatientRepository patientRepository, StateRepository stateRepository, PatientService patientService) {
         this.userRepository = userRepository;
         this.patientRepository = patientRepository;
         this.stateRepository = stateRepository;
+        this.patientService = patientService;
     }
 
     public Set<Patient> getPatients(int filter) throws BadCredentialsException {
@@ -79,6 +81,7 @@ public class WardNurseService {
 
         if (patientRepository.findById(patientID).isPresent()) patient = patientRepository.findById(patientID).get();
         else throw new BadCredentialsException("No such Patient!");
-        return patient;
+        patientService.testDischarge(patient);
+        return patientRepository.findById(patientID).get();
     }
 }

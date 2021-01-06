@@ -52,10 +52,6 @@ public class MatronService {
                     if (patient.getCondition() == 0) result.add(patient);
                     break;
                 case 2:
-                    // 是否病亡
-                    if (patient.getCondition() == 4) result.add(patient);
-                    break;
-                case 3:
                     // 是否待转其他区域
                     if (patient.getArea() != patient.getCondition()) result.add(patient);
                     break;

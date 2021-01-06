@@ -1,13 +1,7 @@
 package fudan.database.pj;
 
-import fudan.database.pj.domain.Authority;
-import fudan.database.pj.domain.Sickbed;
-import fudan.database.pj.domain.User;
-import fudan.database.pj.domain.Ward;
-import fudan.database.pj.repository.AuthorityRepository;
-import fudan.database.pj.repository.SickbedRepository;
-import fudan.database.pj.repository.UserRepository;
-import fudan.database.pj.repository.WardRepository;
+import fudan.database.pj.domain.*;
+import fudan.database.pj.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -47,6 +41,13 @@ public class PJApplication {
             userRepository.save(matron);
             Authority matAuthority = new Authority("matron", matron, i);
             authorityRepository.save(matAuthority);
+
+            for (int j = 1; j <= 2; j++) {
+                User wardNurse = new User("WardNurse" + i + j, passwordEncoder.encode(password), "WardNurse" + i + j);
+                userRepository.save(wardNurse);
+                Authority wardAuthority = new Authority("wardNurse", wardNurse, i);
+                authorityRepository.save(wardAuthority);
+            }
         }
 
         User emergencyNurse = new User("EmergencyNurse", passwordEncoder.encode(password), "EmergencyNurse");

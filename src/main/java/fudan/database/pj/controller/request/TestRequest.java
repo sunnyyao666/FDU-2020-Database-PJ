@@ -2,13 +2,12 @@ package fudan.database.pj.controller.request;
 
 import java.util.Date;
 
-public class StateRequest {
+public class TestRequest {
     private Long patientID;
-    private float temperature;
-    private String symptom;
+    private int result;
     private Date createTime;
 
-    public StateRequest() {
+    public TestRequest() {
     }
 
     public Long getPatientID() {
@@ -19,20 +18,12 @@ public class StateRequest {
         this.patientID = patientID;
     }
 
-    public float getTemperature() {
-        return temperature;
+    public int getResult() {
+        return result;
     }
 
-    public void setTemperature(float temperature) {
-        this.temperature = temperature;
-    }
-
-    public String getSymptom() {
-        return symptom;
-    }
-
-    public void setSymptom(String symptom) {
-        this.symptom = symptom;
+    public void setResult(int result) {
+        this.result = result;
     }
 
     public Date getCreateTime() {

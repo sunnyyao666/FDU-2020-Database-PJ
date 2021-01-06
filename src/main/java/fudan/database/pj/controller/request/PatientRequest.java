@@ -4,11 +4,20 @@ package fudan.database.pj.controller.request;
  * @author YHT
  */
 public class PatientRequest {
+    private Long patientID;
     private String name;
     private String information;
     private int condition;
 
-    public PatientRequest(){
+    public PatientRequest() {
+    }
+
+    public Long getPatientID() {
+        return patientID;
+    }
+
+    public void setPatientID(Long patientID) {
+        this.patientID = patientID;
     }
 
     public String getName() {

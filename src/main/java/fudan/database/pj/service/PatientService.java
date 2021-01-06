@@ -1,9 +1,6 @@
 package fudan.database.pj.service;
 
-import fudan.database.pj.domain.Authority;
-import fudan.database.pj.domain.Patient;
-import fudan.database.pj.domain.Sickbed;
-import fudan.database.pj.domain.Ward;
+import fudan.database.pj.domain.*;
 import fudan.database.pj.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +13,17 @@ public class PatientService {
     private final WardRepository wardRepository;
     private final SickbedRepository sickbedRepository;
     private final PatientRepository patientRepository;
+    private final StateRepository stateRepository;
+    private final TestRepository testRepository;
 
     @Autowired
-    public PatientService(AuthorityRepository authorityRepository, WardRepository wardRepository, SickbedRepository sickbedRepository, PatientRepository patientRepository) {
+    public PatientService(AuthorityRepository authorityRepository, WardRepository wardRepository, SickbedRepository sickbedRepository, PatientRepository patientRepository, StateRepository stateRepository, TestRepository testRepository) {
         this.authorityRepository = authorityRepository;
         this.wardRepository = wardRepository;
         this.sickbedRepository = sickbedRepository;
         this.patientRepository = patientRepository;
+        this.stateRepository = stateRepository;
+        this.testRepository = testRepository;
     }
 
     public void newFreeNurse(int area, int number) {
@@ -92,5 +93,36 @@ public class PatientService {
             for (Sickbed s : sickbeds) if (s.getPatient() == null) n++;
         }
         return n;
+    }
+
+    public int getFreeNurseNum(int area) {
+        Set<Authority> wardNurses = authorityRepository.findAllByAuthorityAndArea("wardNurse", area);
+        int n = 0;
+        int m = 4 - area;
+        for (Authority a : wardNurses)
+            if (a.getSickbeds().size() < m) n++;
+        return n;
+    }
+
+    public boolean testDischarge(Patient patient) {
+        if (patient.getStates().size() < 3 || patient.getTests().size() < 2) return false;
+        if (patient.getCondition() != 1) return false;
+        Set<State> states = stateRepository.findAllByPatientIDOrderByCreateTimeDesc(patient.getId());
+        Set<Test> tests = testRepository.findAllByPatientIDOrderByCreateTimeDesc(patient.getId());
+        int i = 0;
+        for (State state : states) {
+            if (state.getTemperature() >= 37.3) return false;
+            i++;
+            if (i >= 3) break;
+        }
+        i = 0;
+        for (Test test : tests) {
+            if (test.getResult() == 1) return false;
+            i++;
+            if (i >= 2) break;
+        }
+        patient.setCondition(0);
+        patientRepository.save(patient);
+        return true;
     }
 }

@@ -25,6 +25,6 @@ public class WardNurseController {
 
     @PostMapping("/wardNurseUpdateInfo")
     public ResponseEntity<?> updateInfo(@RequestBody StateRequest stateRequest) {
-        return ResponseEntity.ok(wardNurseService.updateState(stateRequest.getId(), stateRequest.getTemperature(), stateRequest.getSymptom(), stateRequest.getCreateTime()));
+        return ResponseEntity.ok(wardNurseService.updateState(stateRequest.getPatientID(), stateRequest.getTemperature(), stateRequest.getSymptom(), stateRequest.getCreateTime()));
     }
 }
