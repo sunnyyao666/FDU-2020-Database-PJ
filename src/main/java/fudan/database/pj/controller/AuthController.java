@@ -39,5 +39,4 @@ public class AuthController {
     public ResponseEntity<?> updateInfo(@RequestBody UserRequest request) {
         return ResponseEntity.ok(authService.updateInfo(request.getPassword(), request.getInformation()));
     }
-
 }

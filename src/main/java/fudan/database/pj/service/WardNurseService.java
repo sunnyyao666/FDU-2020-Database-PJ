@@ -49,10 +49,6 @@ public class WardNurseService {
                     // 是否可以出院
                     if (patient.getCondition() == 0) result.add(patient);
                     break;
-                case 2:
-                    // 是否病亡
-                    if (patient.getCondition() == 4) result.add(patient);
-                    break;
                 default:
                     result.add(patient);
             }

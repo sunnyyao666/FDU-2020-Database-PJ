@@ -33,7 +33,7 @@ public class AuthService {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userDetails == null) throw new BadCredentialsException("Not authorized.");
         User user = userRepository.findByUsername(userDetails.getUsername());
-        user.setPassword(encoder.encode(password));
+        if (password != null) user.setPassword(encoder.encode(password));
         user.setInformation(information);
         userRepository.save(user);
         return user;
