@@ -25,6 +25,6 @@ public class EmergencyNurseController {
 
     @PostMapping("/emergencyNurseAddPatient")
     public ResponseEntity<?> addPatient(@RequestBody PatientRequest patientRequest) {
-        return ResponseEntity.ok(emergencyNurseService.addPatient(patientRequest.getName(), patientRequest.getInformation(), patientRequest.getCondition()));
+        return ResponseEntity.ok(emergencyNurseService.addPatient(patientRequest.getName(), patientRequest.getInformation(), patientRequest.getCondition(), patientRequest.getResult(), patientRequest.getCreateTime()));
     }
 }
