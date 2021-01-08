@@ -77,10 +77,10 @@ public class PatientService {
 
         patient.setArea(to);
         patient.setTransferred(true);
+        patient.setSickbed(sickbed);
         patientRepository.save(patient);
 
         sickbed.setWardNurse(wardNurse);
-        sickbed.setPatient(patient);
         sickbedRepository.save(sickbed);
 
         return patientRepository.findById(patient.getId()).get();
