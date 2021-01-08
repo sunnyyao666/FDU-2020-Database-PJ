@@ -29,7 +29,7 @@ public class PatientService {
     public void newFreeNurse(int area, int number) {
         number = Math.min(number, getEmptyBedsNum(area));
         if (number == 0) return;
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 5; i >= 1; i--) {
             if (i == area || i == 4) continue;
             Set<Patient> patients = patientRepository.findAllByAreaAndCondition(i, area);
             if (patients == null || patients.size() == 0) continue;
