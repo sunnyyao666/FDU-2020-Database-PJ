@@ -43,6 +43,8 @@ public class PatientService {
                     sickbed.setWardNurse(null);
                     sickbed.setPatient(null);
                     sickbedRepository.save(sickbed);
+                    patient.setSickbed(null);
+                    patientRepository.save(patient);
                 }
                 Patient newPatient = transferArea(patientRepository.findById(patient.getId()).get());
                 if (newPatient.getArea() == newPatient.getCondition()) {

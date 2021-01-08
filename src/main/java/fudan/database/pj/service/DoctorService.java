@@ -95,6 +95,7 @@ public class DoctorService {
             sickbedRepository.save(sickbed);
             patientService.newFreeNurse(authority.getArea(), 1);
             patient.setArea(condition);
+            patient.setSickbed(null);
             patientRepository.save(patient);
             return patient;
         } else {
