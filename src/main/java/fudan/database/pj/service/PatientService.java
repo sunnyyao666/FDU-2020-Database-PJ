@@ -117,11 +117,22 @@ public class PatientService {
             if (i >= 3) break;
         }
         i = 0;
+        long startTime = 0;
         for (Test test : tests) {
             if (test.getResult() == 1) return false;
-            i++;
+            if (i == 0) {
+                startTime = test.getCreateTime().getTime();
+                i++;
+            } else {
+                long endTime = test.getCreateTime().getTime();
+                if (endTime - startTime >= 24 * 60 * 60 * 1000) {
+                    i++;
+                    startTime = endTime;
+                } else continue;
+            }
             if (i >= 2) break;
         }
+        if (i < 2) return false;
         patient.setCondition(0);
         patientRepository.save(patient);
         return true;
