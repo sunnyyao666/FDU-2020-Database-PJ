@@ -76,6 +76,7 @@ public class PatientService {
         if (wardNurse == null) return patient;
 
         patient.setArea(to);
+        patient.setTransferred(true);
         patientRepository.save(patient);
 
         sickbed.setWardNurse(wardNurse);

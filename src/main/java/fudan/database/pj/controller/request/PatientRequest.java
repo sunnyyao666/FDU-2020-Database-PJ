@@ -1,5 +1,7 @@
 package fudan.database.pj.controller.request;
 
+import java.util.Date;
+
 /**
  * @author YHT
  */
@@ -8,6 +10,8 @@ public class PatientRequest {
     private String name;
     private String information;
     private int condition;
+    private int result;
+    private Date createTime;
 
     public PatientRequest() {
     }
@@ -42,5 +46,21 @@ public class PatientRequest {
 
     public void setCondition(int condition) {
         this.condition = condition;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

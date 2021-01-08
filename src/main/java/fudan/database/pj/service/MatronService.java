@@ -55,12 +55,31 @@ public class MatronService {
                     // 是否待转其他区域
                     if (patient.getArea() != patient.getCondition()) result.add(patient);
                     break;
+                case 3:
+                    // 是否新转入
+                    if (patient.isTransferred()) result.add(patient);
+                    break;
                 default:
                     result.add(patient);
             }
         }
         if (result.size() != 0) return result;
         else return null;
+    }
+
+    public Patient confirmPatient(Long patientID) throws BadCredentialsException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (userDetails == null) throw new BadCredentialsException("Not authorized.");
+        User user = userRepository.findByUsername(userDetails.getUsername());
+        Authority authority = (Authority) user.getAuthorities().toArray()[0];
+        if (!"matron".equals(authority.getAuthority())) throw new BadCredentialsException("Not authorized.");
+
+        Patient patient = null;
+        if (!patientRepository.findById(patientID).isPresent()) throw new BadCredentialsException("No such patient.");
+        else patient = patientRepository.findById(patientID).get();
+        patient.setTransferred(false);
+        patientRepository.save(patient);
+        return patient;
     }
 
     public Set<User> getNurses(int filter) throws BadCredentialsException {

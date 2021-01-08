@@ -31,6 +31,8 @@ public class Patient {
     private int area;
     private int condition;
 
+    private boolean transferred;
+
     @OneToOne
     @JsonIgnore
     private Sickbed sickbed;
@@ -49,6 +51,7 @@ public class Patient {
         this.information = information;
         this.area = 5;
         this.condition = condition;
+        this.transferred = false;
     }
 
     public Long getId() {
@@ -89,6 +92,14 @@ public class Patient {
 
     public void setCondition(int condition) {
         this.condition = condition;
+    }
+
+    public boolean isTransferred() {
+        return transferred;
+    }
+
+    public void setTransferred(boolean transferred) {
+        this.transferred = transferred;
     }
 
     public Sickbed getSickbed() {

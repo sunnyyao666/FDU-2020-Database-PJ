@@ -1,6 +1,7 @@
 package fudan.database.pj.controller;
 
 import fudan.database.pj.controller.request.FilterRequest;
+import fudan.database.pj.controller.request.PatientRequest;
 import fudan.database.pj.service.MatronService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,11 @@ public class MatronController {
     @PostMapping("/matronGetPatients")
     public ResponseEntity<?> getPatients(@RequestBody FilterRequest filterRequest) {
         return ResponseEntity.ok(matronService.getPatients(filterRequest.getFilter()));
+    }
+
+    @PostMapping("/matronConfirmPatient")
+    public ResponseEntity<?> confirmPatient(@RequestBody PatientRequest patientRequest) {
+        return ResponseEntity.ok(matronService.confirmPatient(patientRequest.getPatientID()));
     }
 
     @PostMapping("/matronGetWards")
