@@ -51,7 +51,7 @@ public class EmergencyNurseService {
 
         Set<Patient> result = new HashSet<Patient>();
 
-        if (filter >= 1 && filter <= 5) result = patientRepository.findAllByArea(filter);
+        if (filter >= 0 && filter <= 5) result = patientRepository.findAllByArea(filter);
         else if (filter >= 7 && filter <= 9) result = patientRepository.findAllByCondition(filter - 6);
 
         if (result == null || result.size() == 0) return null;
