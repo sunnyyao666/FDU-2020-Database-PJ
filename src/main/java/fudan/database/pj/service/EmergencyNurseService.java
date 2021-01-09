@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,7 +39,11 @@ public class EmergencyNurseService {
         patientRepository.save(patient);
         Test test = new Test(patient, result, createTime);
         testRepository.save(test);
-        patient = patientService.transferArea(patient);
+        Set<Test> tests = new HashSet<Test>();
+        tests.add(test);
+        patient.setTests(tests);
+        patientRepository.save(patient);
+        patient = patientService.transferArea(patient.getId());
         return patient;
     }
 

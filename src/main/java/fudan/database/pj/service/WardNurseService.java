@@ -77,7 +77,12 @@ public class WardNurseService {
 
         if (patientRepository.findById(patientID).isPresent()) patient = patientRepository.findById(patientID).get();
         else throw new BadCredentialsException("No such Patient!");
-        patientService.testDischarge(patient);
+        Set<State> states = patient.getStates();
+        if (states == null) states = new HashSet<State>();
+        states.add(state);
+        patient.setStates(states);
+        patientRepository.save(patient);
+        patientService.testDischarge(patientID);
         return patientRepository.findById(patientID).get();
     }
 }

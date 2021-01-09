@@ -40,13 +40,20 @@ public class PatientService {
                 patientRepository.save(patient);
                 Sickbed sickbed = patient.getSickbed();
                 if (sickbed != null) {
+                    Authority wardNurse = sickbed.getWardNurse();
+                    Set<Sickbed> sickbeds = wardNurse.getSickbeds();
+                    sickbeds.remove(sickbed);
+                    wardNurse.setSickbeds(sickbeds);
+                    authorityRepository.save(wardNurse);
+
                     sickbed.setWardNurse(null);
                     sickbed.setPatient(null);
                     sickbedRepository.save(sickbed);
+
                     patient.setSickbed(null);
                     patientRepository.save(patient);
                 }
-                Patient newPatient = transferArea(patientRepository.findById(patient.getId()).get());
+                Patient newPatient = transferArea(patient.getId());
                 if (newPatient.getArea() == newPatient.getCondition()) {
                     n++;
                     number--;
@@ -58,7 +65,8 @@ public class PatientService {
         }
     }
 
-    public Patient transferArea(Patient patient) {
+    public Patient transferArea(Long patientID) {
+        Patient patient = patientRepository.findById(patientID).get();
         int to = patient.getCondition();
         if (patient.getArea() == to) return patient;
 
@@ -86,6 +94,11 @@ public class PatientService {
         sickbed.setWardNurse(wardNurse);
         sickbedRepository.save(sickbed);
 
+        Set<Sickbed> sickbeds = wardNurse.getSickbeds();
+        sickbeds.add(sickbed);
+        wardNurse.setSickbeds(sickbeds);
+        authorityRepository.save(wardNurse);
+
         return patientRepository.findById(patient.getId()).get();
     }
 
@@ -108,7 +121,8 @@ public class PatientService {
         return n;
     }
 
-    public boolean testDischarge(Patient patient) {
+    public boolean testDischarge(Long patientID) {
+        Patient patient = patientRepository.findById(patientID).get();
         if (patient.getStates().size() < 3 || patient.getTests().size() < 2) return false;
         if (patient.getCondition() != 1) return false;
         Set<State> states = stateRepository.findAllByPatientIDOrderByCreateTimeDesc(patient.getId());

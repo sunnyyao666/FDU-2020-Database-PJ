@@ -90,25 +90,43 @@ public class DoctorService {
         patientRepository.save(patient);
         if (condition == 4 || condition == 0) {
             Sickbed sickbed = patient.getSickbed();
+
+            Authority wardNurse = sickbed.getWardNurse();
+            Set<Sickbed> sickbeds=wardNurse.getSickbeds();
+            sickbeds.remove(sickbed);
+            wardNurse.setSickbeds(sickbeds);
+            authorityRepository.save(wardNurse);
+
             sickbed.setPatient(null);
             sickbed.setWardNurse(null);
             sickbedRepository.save(sickbed);
+
             patient.setArea(condition);
             patient.setSickbed(null);
             patientRepository.save(patient);
+
             patientService.newFreeNurse(authority.getArea(), 1);
             return patient;
         } else {
             int n = Math.min(patientService.getEmptyBedsNum(condition), patientService.getFreeNurseNum(condition));
             if (n == 0) return patient;
             Sickbed sickbed = patient.getSickbed();
+
+            Authority wardNurse = sickbed.getWardNurse();
+            Set<Sickbed> sickbeds=wardNurse.getSickbeds();
+            sickbeds.remove(sickbed);
+            wardNurse.setSickbeds(sickbeds);
+            authorityRepository.save(wardNurse);
+
             sickbed.setPatient(null);
             sickbed.setWardNurse(null);
             sickbedRepository.save(sickbed);
+
             patient.setArea(5);
             patient.setSickbed(null);
             patientRepository.save(patient);
-            patientService.transferArea(patient);
+
+            patientService.transferArea(patientID);
             patientService.newFreeNurse(authority.getArea(), 1);
             return patientRepository.findById(patientID).get();
         }
@@ -127,7 +145,11 @@ public class DoctorService {
 
         Test test = new Test(patient, result, createTime);
         testRepository.save(test);
-        patientService.testDischarge(patientRepository.findById(patientID).get());
+        Set<Test> tests = patient.getTests();
+        tests.add(test);
+        patient.setTests(tests);
+        patientRepository.save(patient);
+        patientService.testDischarge(patientID);
         return patientRepository.findById(patientID).get();
     }
 }
