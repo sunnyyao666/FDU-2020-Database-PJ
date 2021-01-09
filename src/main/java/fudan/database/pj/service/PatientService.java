@@ -120,7 +120,7 @@ public class PatientService {
             if (i >= 3) break;
         }
         i = 0;
-        long startTime = 0;
+        long startTime = 0L;
         for (Test test : tests) {
             if (test.getResult() == 1) return false;
             if (i == 0) {
@@ -128,7 +128,7 @@ public class PatientService {
                 i++;
             } else {
                 long endTime = test.getCreateTime().getTime();
-                if (endTime - startTime >= 24 * 60 * 60 * 1000) {
+                if (startTime - endTime >= 24 * 60 * 60 * 1000) {
                     i++;
                     startTime = endTime;
                 } else continue;
