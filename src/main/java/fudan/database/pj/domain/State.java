@@ -34,6 +34,7 @@ public class State {
         this.patient = patient;
         this.patientID = patient.getId();
         this.temperature = temperature;
+        this.symptom = symptom;
         this.condition = patient.getCondition();
         this.createTime = createTime;
     }

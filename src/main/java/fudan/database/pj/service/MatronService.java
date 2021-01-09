@@ -117,6 +117,7 @@ public class MatronService {
             return true;
         } else {
             wardNurse.setArea(authority.getArea());
+            authorityRepository.save(wardNurse);
             patientService.newFreeNurse(authority.getArea(), 4 - authority.getArea());
             return true;
         }
