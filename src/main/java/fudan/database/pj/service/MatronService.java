@@ -108,7 +108,7 @@ public class MatronService {
         User u = userRepository.findByUsername(username);
         if (u == null) throw new BadCredentialsException("No such user!");
         Authority wardNurse = (Authority) u.getAuthorities().toArray()[0];
-        if ("wardNurse".equals(wardNurse.getAuthority())) throw new BadCredentialsException("No such wardNurse!");
+        if (!"wardNurse".equals(wardNurse.getAuthority())) throw new BadCredentialsException("No such wardNurse!");
 
         if (filter == 0) {
             if (wardNurse.getSickbeds().size() > 0) throw new ResponsibleToPatientsException(username);

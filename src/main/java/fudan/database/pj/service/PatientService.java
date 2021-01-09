@@ -82,6 +82,7 @@ public class PatientService {
         patient.setSickbed(sickbed);
         patientRepository.save(patient);
 
+        sickbed.setPatient(patient);
         sickbed.setWardNurse(wardNurse);
         sickbedRepository.save(sickbed);
 
