@@ -93,15 +93,20 @@ public class DoctorService {
             sickbed.setPatient(null);
             sickbed.setWardNurse(null);
             sickbedRepository.save(sickbed);
-            patientService.newFreeNurse(authority.getArea(), 1);
             patient.setArea(condition);
             patient.setSickbed(null);
             patientRepository.save(patient);
+            patientService.newFreeNurse(authority.getArea(), 1);
             return patient;
         } else {
             int n = Math.min(patientService.getEmptyBedsNum(condition), patientService.getFreeNurseNum(condition));
             if (n == 0) return patient;
+            Sickbed sickbed = patient.getSickbed();
+            sickbed.setPatient(null);
+            sickbed.setWardNurse(null);
+            sickbedRepository.save(sickbed);
             patient.setArea(5);
+            patient.setSickbed(null);
             patientRepository.save(patient);
             patientService.transferArea(patient);
             patientService.newFreeNurse(authority.getArea(), 1);
