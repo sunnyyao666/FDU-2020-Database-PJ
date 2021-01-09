@@ -87,9 +87,24 @@
                     message: 'Successful log in!',
                     type: "success"
                   });
-                  console.log(resp)
-                  // this.$store.commit('login', resp.headers);
-                  // this.$store.commit('setUserDetails', resp.data);
+                  console.log(resp);
+
+                  const position=resp.data.authorities[0].authority;
+                  if(position==="doctor"){
+                    this.$router.push('/Doctor')
+                  }
+                  if(position==="emergencyNurse"){
+                    this.$router.push('/EmergencyNurse')
+                  }
+                  if(position==="matron"){
+                    this.$router.push('/Matron')
+                  }
+                  if(position==="wardNurse"){
+                    this.$router.push('/WardNurse')
+                  }
+                  console.log(resp.data.authorities[0].authority);
+                  this.$store.commit('login', resp.headers);
+                  this.$store.commit('setUserDetails', resp.data);
                   // if (resp.data.authorities.length > 0 && resp.data.authorities[0].authority === "Admin") {
                   //   this.$store.commit('setAdmin');
                   //   this.$router.push('/ManagerAssessment');

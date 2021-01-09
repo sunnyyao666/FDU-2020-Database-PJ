@@ -13,7 +13,12 @@ import Contribution from "../components/Contribution";
 import PCMember from "../components/PCMember";
 import Author from "../components/Author";
 import Discussion from "../components/Discussion";
-import { Message } from 'element-ui';
+import Doctor from "../components/Doctor";
+import EmergencyNurse from "../components/EmergencyNurse";
+import Matron from "../components/Matron";
+import WardNurse from "../components/WardNurse";
+import Information from "../components/Information";
+import {Message} from 'element-ui';
 
 Vue.use(Router);
 
@@ -26,172 +31,194 @@ export const router = new Router({
       component: HelloWorld,
       meta: {
         // requireAuth: true // 需要登录权限
-    },   
+      },
     },
     {
       path: '/login',
       name: 'Login',
       component: Login,
-      meta: {
-        tag: "logged"
-      }
+      // meta: {
+      //   tag: "logged"
+      // }
     },
-    
+    {
+      path: '/Doctor',
+      name: 'Doctor',
+      component: Doctor,
+      // meta:{
+      //   tag:"logged"
+      // }
+    }, {
+      path: '/EmergencyNurse',
+      name: 'EmergencyNurse',
+      component: EmergencyNurse,
+      // meta:{
+      //   tag:"logged"
+      // }
+    }, {
+      path: '/Matron',
+      name: 'Matron',
+      component: Matron,
+    }, {path: '/WardNurse', name: 'WardNurse', component: WardNurse},{
+    path:'/information',
+      name:'information',
+      component:Information
+    },
     {
       path: '/register',
       name: 'Register',
       component: Register,
-      meta: {
-        tag: "logged"
-      }
+      // meta: {
+      //   tag: "logged"
+      // }
     },
-    {
-      path: '/personalInformation',
-      name: 'PersonalInformation',
-      component: PersonalInformation,
-      meta: {
-        requireAuth: true
-      },
-    },
-    {
-      path: '/application',
-      name: 'Application',
-      component: Application,
-      meta: {
-        requireAuth: true // 需要登录权限
-      }
-    },
-    {
-      path: '/ManagerAssessment',
-      name: 'ManagerAssessment',
-      component: ManagerAssessment,
-      meta: {
-        tag: 'admin'
-      },
-      beforeEnter: (to, from, next) => {
-        if (!store.state.admin) {
-          Message({
-            message: "You haven't the authority",
-            type: "error",
-            showClose: true,
-            duration: 0,
-          });
-          router.go(-1)
-        //  next(false)
-        } else next()
-      }
-    }, {
-      path: '/chair',
-      name: 'Chair',
-      component: Chair,
-      meta: {
-        requireAuth: true,
-        tag: 'selectedConference'
-      },
-      beforeEnter: (to, from, next) => {
-        if (!store.state.selectedConference||store.state.selectedConference.type!=='chair') {
-
-          Message({
-            message:"invalid access" ,
-            type: "error",
-            showClose: true,
-            duration: 0,
-          });
-          router.go(-1)
-         // next(false)
-        } else next()
-      }
-
-    },
-    {
-      path: '/MeetingManagement',
-      name: 'MeetingManagement',
-      component: MeetingManagement,
-      meta: {
-        requireAuth: true
-      },
-    }, {
-      path: '/contribution',
-      name: 'Contribution',
-      component: Contribution,
-      meta: {
-        requireAuth: true,
-        tag: 'selectedConference'
-      },
-      beforeEnter: (to, from, next) => {
-        if (!store.state.selectedConference||(store.state.selectedConference.type!=='contribution'&&store.state.selectedConference.type!=='author')) {
-          Message({
-            message: "invalid access",
-            type: "error",
-            showClose: true,
-            duration: 0,
-          });
-          router.go(-1)
-          //next(false)
-        } else next()
-      }
-    }, {
-      path: '/pcmember',
-      name: 'PCMember',
-      component: PCMember,
-      meta: {
-        requireAuth: true,
-        tag: 'selectedConference'
-      },
-      beforeEnter: (to, from, next) => {
-        if (!store.state.selectedConference||(store.state.selectedConference.type!=='PC'&&store.state.selectedConference.type!=='chair')) {
-          Message({
-            message:"invalid access",
-            type: "error",
-            showClose: true,
-            duration: 0,
-          });
-         router.go(-1)
-         // next(false)
-        } else next()
-      }
-    },{
-      path: '/author',
-      name: 'Author',
-      component: Author,
-      meta: {
-        requireAuth: true,
-        tag: 'selectedConference'
-      },
-      beforeEnter: (to, from, next) => {
-        if (!store.state.selectedConference||store.state.selectedConference.type!=='author') {
-          Message({
-            message: "invalid access",
-            type: "error",
-            showClose: true,
-            duration: 0,
-          });
-          router.go(-1)
-         // next(false)
-        } else next()
-      }
-    },{
-      path:'/discussion',
-      name:'discussion',
-      component:Discussion,
-      meta:{
-        //requireAuth:true,
-        tag: 'selectedConference',
-        thesis:'thesis'
-
-      },
-      beforeEnter:(to,from,next)=>{
-        if(!store.state.thesisID){
-          Message({
-            message: "invalid access",
-            type: "error",
-            showClose: true,
-            duration: 0,
-          });
-          router.go(-1)
-        } else next()
-      }
-    }
+    //   {
+    //     path: '/personalInformation',
+    //     name: 'PersonalInformation',
+    //     component: PersonalInformation,
+    //     meta: {
+    //       requireAuth: true
+    //     },
+    //   },
+    //   {
+    //     path: '/application',
+    //     name: 'Application',
+    //     component: Application,
+    //     meta: {
+    //       requireAuth: true // 需要登录权限
+    //     }
+    //   },
+    //   {
+    //     path: '/ManagerAssessment',
+    //     name: 'ManagerAssessment',
+    //     component: ManagerAssessment,
+    //     meta: {
+    //       tag: 'admin'
+    //     },
+    //     beforeEnter: (to, from, next) => {
+    //       if (!store.state.admin) {
+    //         Message({
+    //           message: "You haven't the authority",
+    //           type: "error",
+    //           showClose: true,
+    //           duration: 0,
+    //         });
+    //         router.go(-1)
+    //       //  next(false)
+    //       } else next()
+    //     }
+    //   }, {
+    //     path: '/chair',
+    //     name: 'Chair',
+    //     component: Chair,
+    //     meta: {
+    //       requireAuth: true,
+    //       tag: 'selectedConference'
+    //     },
+    //     beforeEnter: (to, from, next) => {
+    //       if (!store.state.selectedConference||store.state.selectedConference.type!=='chair') {
+    //
+    //         Message({
+    //           message:"invalid access" ,
+    //           type: "error",
+    //           showClose: true,
+    //           duration: 0,
+    //         });
+    //         router.go(-1)
+    //        // next(false)
+    //       } else next()
+    //     }
+    //
+    //   },
+    //   {
+    //     path: '/MeetingManagement',
+    //     name: 'MeetingManagement',
+    //     component: MeetingManagement,
+    //     meta: {
+    //       requireAuth: true
+    //     },
+    //   }, {
+    //     path: '/contribution',
+    //     name: 'Contribution',
+    //     component: Contribution,
+    //     meta: {
+    //       requireAuth: true,
+    //       tag: 'selectedConference'
+    //     },
+    //     beforeEnter: (to, from, next) => {
+    //       if (!store.state.selectedConference||(store.state.selectedConference.type!=='contribution'&&store.state.selectedConference.type!=='author')) {
+    //         Message({
+    //           message: "invalid access",
+    //           type: "error",
+    //           showClose: true,
+    //           duration: 0,
+    //         });
+    //         router.go(-1)
+    //         //next(false)
+    //       } else next()
+    //     }
+    //   }, {
+    //     path: '/pcmember',
+    //     name: 'PCMember',
+    //     component: PCMember,
+    //     meta: {
+    //       requireAuth: true,
+    //       tag: 'selectedConference'
+    //     },
+    //     beforeEnter: (to, from, next) => {
+    //       if (!store.state.selectedConference||(store.state.selectedConference.type!=='PC'&&store.state.selectedConference.type!=='chair')) {
+    //         Message({
+    //           message:"invalid access",
+    //           type: "error",
+    //           showClose: true,
+    //           duration: 0,
+    //         });
+    //        router.go(-1)
+    //        // next(false)
+    //       } else next()
+    //     }
+    //   },{
+    //     path: '/author',
+    //     name: 'Author',
+    //     component: Author,
+    //     meta: {
+    //       requireAuth: true,
+    //       tag: 'selectedConference'
+    //     },
+    //     beforeEnter: (to, from, next) => {
+    //       if (!store.state.selectedConference||store.state.selectedConference.type!=='author') {
+    //         Message({
+    //           message: "invalid access",
+    //           type: "error",
+    //           showClose: true,
+    //           duration: 0,
+    //         });
+    //         router.go(-1)
+    //        // next(false)
+    //       } else next()
+    //     }
+    //   },{
+    //     path:'/discussion',
+    //     name:'discussion',
+    //     component:Discussion,
+    //     meta:{
+    //       //requireAuth:true,
+    //       tag: 'selectedConference',
+    //       thesis:'thesis'
+    //
+    //     },
+    //     beforeEnter:(to,from,next)=>{
+    //       if(!store.state.thesisID){
+    //         Message({
+    //           message: "invalid access",
+    //           type: "error",
+    //           showClose: true,
+    //           duration: 0,
+    //         });
+    //         router.go(-1)
+    //       } else next()
+    //     }
+    //   }
   ]
 })
 
@@ -201,19 +228,19 @@ router.beforeEach(function (to, from, next) {
     store.commit('removeSelectedConference')
 
   }
-  if(to.meta.thesis!=='thesis'&&store.state.thesisID){
+  if (to.meta.thesis !== 'thesis' && store.state.thesisID) {
     store.commit('removeThesisID')
   }
 
   if (to.meta.tag !== 'admin' && store.state.admin) {
     Message({
-      message:'Administrator Model' ,
-      type:  'warning',
+      message: 'Administrator Model',
+      type: 'warning',
       showClose: true,
       duration: 0,
     });
     //router.go(-1)
-    next( {path: '/ManagerAssessment',})
+    next({path: '/ManagerAssessment',})
   } else if (to.matched.some(record => record.meta.requireAuth)) {
     // else if(to.meta.requireAuth){
     if (store.state.token) {
@@ -237,12 +264,12 @@ router.beforeEach(function (to, from, next) {
       //console.log(to.meta.title)
       Message({
         message: "Already logged in.",
-        
+
         showClose: true,
         duration: 0,
       });
       // store.commit("logout");
-       router.replace('/personalInformation')
+      router.replace('/personalInformation')
       // next({
       //   path: '/personalInformation'
       // });
@@ -250,8 +277,7 @@ router.beforeEach(function (to, from, next) {
       //console.log("no token")
       next();
     }
-  }
-  else {
+  } else {
     next()
   }
 })
