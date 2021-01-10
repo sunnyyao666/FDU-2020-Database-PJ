@@ -275,6 +275,8 @@
                   this.searchData[i].condition = "severe"
                 } else if (this.searchData[i].condition === 3) {
                   this.searchData[i].condition = "critical"
+                }else if (this.searchData[i].condition === 0) {
+                  this.searchData[i].condition = "able to leave hospital"
                 }
                 const length1 = this.searchData[i].tests.length;
                 for (let j = 0; j < length1; j++) {
